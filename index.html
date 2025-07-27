@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Noctanime - Anime Library</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0b0c10;
+      color: #fff;
+    }
+    header {
+      background-color: #1f2833;
+      padding: 20px;
+      text-align: center;
+    }
+    header h1 {
+      color: #66fcf1;
+      margin: 0;
+      font-size: 32px;
+    }
+    .search-box {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .search-box input {
+      width: 80%;
+      max-width: 400px;
+      padding: 10px 15px;
+      border-radius: 6px;
+      border: none;
+      font-size: 16px;
+    }
+    .anime-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 15px;
+      padding: 20px;
+      justify-items: center;
+    }
+    .anime-card {
+      background-color: #1c1c1c;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 100%;
+      max-width: 180px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      transition: transform 0.2s ease-in-out;
+      display: flex;
+      flex-direction: column;
+    }
+    .anime-card:hover {
+      transform: scale(1.05);
+    }
+    .anime-card img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 2 / 3;
+      object-fit: cover;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    .anime-title {
+      padding: 10px 8px 5px;
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: bold;
+    }
+    .toggle-btn {
+      margin: 0 auto 10px;
+      padding: 6px 12px;
+      background-color: #66fcf1;
+      color: #0b0c10;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .episode-list {
+      display: none;
+      padding: 0 15px 10px;
+      background-color: #2c2c2c;
+      font-size: 0.85rem;
+    }
+    .episode-list a {
+      display: block;
+      color: #66fcf1;
+      text-decoration: none;
+      margin-top: 6px;
+    }
+    .episode-list a:hover {
+      text-decoration: underline;
+    }
+
+    .comment-section {
+      margin: 40px auto 20px;
+      max-width: 600px;
+      padding: 20px;
+      background-color: #1a1a1a;
+      border-radius: 10px;
+    }
+    .comment-section h2 {
+      margin-top: 0;
+      color: #66fcf1;
+      font-size: 1.3rem;
+    }
+    .comment-section textarea {
+      width: 100%;
+      height: 80px;
+      border-radius: 6px;
+      padding: 10px;
+      border: none;
+      resize: vertical;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    .comment-section button {
+      margin-top: 10px;
+      background-color: #66fcf1;
+      color: #0b0c10;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .comment-list {
+      margin-top: 15px;
+    }
+    .comment-item {
+      background-color: #2c2c2c;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #1f2833;
+      color: #aaa;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Noctanime</h1>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Cari anime..." onkeyup="filterAnime()">
+  </div>
+</header>
+
+<main class="anime-grid" id="animeGrid">
+  <!-- Contoh Anime -->
+   <div class="anime-card">
+    <img src="yobaisurushinchinin.jpg" alt="Yobai Suru Shinchinin no Harame">
+    <div class="anime-title">Yobai Suru Shinchinin no Harame</div>
+    <button class="toggle-btn" onclick="toggleEpisodes(this)">Lihat Episode</button>
+    <div class="episode-list">
+      <a href="https://example.com/chainsaw-man-ep1" target="_blank">Episode 1</a>
+      <a href="https://example.com/chainsaw-man-ep2" target="_blank">Episode 2</a>
+      <a href="https://example.com/chainsaw-man-ep3" target="_blank">Episode 3</a>
+    </div>
+  </div>
+
+  <div class="anime-card">
+    <img src="yarichikateikiyoushi.jpg" alt="Yarichin Kateikyoushi Netori Houkoku">
+    <div class="anime-title">Yarichin Kateikyoushi Netori Houkoku</div>
+    <button class="toggle-btn" onclick="toggleEpisodes(this)">Lihat Episode</button>
+    <div class="episode-list">
+      <a href="https://vvide0.com/d/28coc05hui4s" target="_blank">Episode 1</a>
+    </div>
+  </div>
+
+  <div class="anime-card">
+    <img src="aikagi.jpg" alt="Aikagi the Animation">
+    <div class="anime-title">Aikagi the Animation</div>
+    <button class="toggle-btn" onclick="toggleEpisodes(this)">Lihat Episode</button>
+    <div class="episode-list">
+      <a href="https://vvide0.com/d/28coc05hui4s" target="_blank">Episode 1</a>
+    </div>
+  </div>
+</main>
+
+<!-- Komentar -->
+<section class="comment-section">
+  <h2>Komentar Pengunjung</h2>
+  <textarea id="commentInput" placeholder="Tulis komentarmu di sini..."></textarea>
+  <button onclick="submitComment()">Kirim Komentar</button>
+  <div id="commentList" class="comment-list"></div>
+</section>
+
+<footer>
+  &copy; 2025 Noctanime | Dibuat dengan semangat anime!
+</footer>
+
+<script>
+  function toggleEpisodes(button) {
+    const list = button.nextElementSibling;
+    const isOpen = list.style.display === 'block';
+    document.querySelectorAll('.episode-list').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.toggle-btn').forEach(btn => btn.textContent = 'Lihat Episode');
+    if (!isOpen) {
+      list.style.display = 'block';
+      button.textContent = 'Sembunyikan Episode';
+    }
+  }
+
+  function filterAnime() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    document.querySelectorAll('.anime-card').forEach(card => {
+      const title = card.querySelector('.anime-title').textContent.toLowerCase();
+      card.style.display = title.includes(query) ? '' : 'none';
+    });
+  }
+
+  // Komentar disimpan di localStorage
+  function submitComment() {
+    const input = document.getElementById("commentInput");
+    const comment = input.value.trim();
+    if (comment) {
+      const comments = JSON.parse(localStorage.getItem("comments") || "[]");
+      comments.push(comment);
+      localStorage.setItem("comments", JSON.stringify(comments));
+      input.value = "";
+      loadComments();
+    }
+  }
+
+  function loadComments() {
+    const commentList = document.getElementById("commentList");
+    const comments = JSON.parse(localStorage.getItem("comments") || "[]");
+    commentList.innerHTML = "";
+    comments.forEach(text => {
+      const div = document.createElement("div");
+      div.className = "comment-item";
+      div.textContent = text;
+      commentList.appendChild(div);
+    });
+  }
+
+  window.onload = loadComments;
+</script>
+
+</body>
+</html>
